@@ -6,6 +6,8 @@ import com.ujjwal.model.Ride;
 
 public interface RideService {
 
+	Ride createRide(Ride ride);
+
 	List<Ride> getRides();
 
 }
