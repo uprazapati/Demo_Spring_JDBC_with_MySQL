@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ujjwal.repository.util.RideRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +76,24 @@ public class RideRepositoryImpl implements RideRepository {
 		return getRide(id.intValue());
 	}
 
-	private Ride getRide(Integer id) {
+	@Override
+	public Ride getRide(Integer id) {
 		Ride ride = jdbcTemplate.queryForObject("select * from ride where id = ?", new RideRowMapper(), id);
 		return ride;
+	}
+
+	@Override
+	public Ride updateRide(Ride ride) {
+		jdbcTemplate.update("update ride set name = ?, duration = ? where id = ?",
+				ride.getName(),
+				ride.getDuration(),
+				ride.getId());
+
+		return ride;
+	}
+
+	@Override
+	public void updateRides(List<Object[]> pairs) {
+		jdbcTemplate.batchUpdate("update ride set ride_date = ? where id = ?", pairs);
 	}
 }
