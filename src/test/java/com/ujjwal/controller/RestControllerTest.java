@@ -18,8 +18,8 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();
 
 		Ride ride = new Ride();
-		ride.setName("UMBC Trail Ride");
-		ride.setDuration(23);
+		ride.setName("Dummy Ride");
+		ride.setDuration(44);
 
 		ride = restTemplate.postForObject("http://localhost:8080/ride_tracker/ride",
 				ride,
@@ -65,6 +65,24 @@ public class RestControllerTest {
 
 		restTemplate.getForObject("http://localhost:8080/ride_tracker/batch",
 				Object.class);
+
+	}
+
+	@Test(timeout=5000)
+	public void testDelete() {
+		RestTemplate restTemplate = new RestTemplate();
+
+		restTemplate.delete("http://localhost:8080/ride_tracker/delete/4");
+
+	}
+
+
+	@Test(timeout=3000)
+	public void testException() {
+		RestTemplate restTemplate = new RestTemplate();
+
+		restTemplate.getForObject("http://localhost:8080/ride_tracker/test",
+				Ride.class);
 
 	}
 }
